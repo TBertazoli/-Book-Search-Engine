@@ -1,8 +1,9 @@
 const express = require('express');
-const {ApolloServer} = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 
-const {typeDefs, resolvers} = require('./schemas');
+const { typeDefs, resolvers } = require('./schemas');
+// const {authMiddleware} = require('./utils/auth');
 const db = require('./config/connection');
 const routes = require('./routes');
 
@@ -30,10 +31,12 @@ const startApolloServer = async (typeDefs, resolvers) => {
   // server.applyMiddleware({ app });
 
   db.once('open', () => {
-    app.listen(PORT, () => console.log(`🌍 Now listening on localhost:${PORT}`));
-    console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+    app.listen(PORT, () => {
+      console.log(`🌍 Now listening on localhost:${PORT}`);
+      console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
+    })
   })
 }
 
- // Call the async function to start the server
- startApolloServer(typeDefs, resolvers);
+// Call the async function to start the server
+startApolloServer(typeDefs, resolvers);
