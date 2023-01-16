@@ -26,13 +26,13 @@ const resolvers = {
         .populate('books')
         
     },
-    books: async (parent, { title }) => {
-      const params = title ? { title } : {};
-      return Book.find(params).sort({ createdAt: -1 });
-    },
-    books: async (parent, { _id }) => {
-      return Book.findOne({ _id });
-    }
+    // books: async (parent, { title }) => {
+    //   const params = title ? { title } : {};
+    //   return Book.find(params).sort({ createdAt: -1 });
+    // },
+    // books: async (parent, { _id }) => {
+    //   return Book.findOne({ _id });
+    // }
   },
 
   Mutation: {
@@ -60,7 +60,7 @@ const resolvers = {
     },
     saveBook: async (parent, arg, context) => {
       if (context.user) {
-        const book = await Book.create({ ...arg, title: context.user.username });
+        const book = await User.create({ ...arg, title: context.user.username });
 
         await User.findOneAndUpdate(
           { _id: parent._id },
