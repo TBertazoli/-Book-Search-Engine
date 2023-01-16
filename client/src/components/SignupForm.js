@@ -18,9 +18,11 @@ const SignupForm = () => {
     setUserFormData({ ...userFormData, [name]: value });
   };
 
+  const [newUser] = useMutation(ADD_USER);
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -29,8 +31,8 @@ const SignupForm = () => {
     }
 
     try {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const response = await createUser(useMutation(ADD_USER));
+      
+      const response = await createUser(newUser);
 
       if (!response.ok) {
         throw new Error('something went wrong!');

@@ -10,6 +10,7 @@ const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [loginMutation] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -19,6 +20,7 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+  
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -26,9 +28,8 @@ const LoginForm = () => {
       event.stopPropagation();
     }
 
-    try {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const loginMutation = useMutation(LOGIN_USER);
+    try {    
+      
       const response = await loginUser(loginMutation);
 
       if (!response.ok) {
