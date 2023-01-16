@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User } = require('../models');
+const { User, Book } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -26,13 +26,13 @@ const resolvers = {
         .populate('books')
         
     },
-    // books: async (parent, { title }) => {
-    //   const params = title ? { title } : {};
-    //   return Book.find(params).sort({ createdAt: -1 });
-    // },
-    // books: async (parent, { _id }) => {
-    //   return Book.findOne({ _id });
-    // }
+    books: async (parent, { title }) => {
+      const params = title ? { title } : {};
+      return Book.find(params).sort({ createdAt: -1 });
+    },
+    books: async (parent, { _id }) => {
+      return Book.findOne({ _id });
+    }
   },
 
   Mutation: {
