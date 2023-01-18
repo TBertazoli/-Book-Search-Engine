@@ -16,22 +16,22 @@ const resolvers = {
       throw new AuthenticationError('Not logged in');
     },
     users: async () => {
-      return User.find()
+      return await User.find()
         .select('-__v -password')
         .populate('books')        
     },
     user: async (parent, { username }) => {
-      return User.findOne({ username })
+      return await User.findOne({ username })
         .select('-__v -password')
         .populate('books')
         
     },
     books: async (parent, { title }) => {
       const params = title ? { title } : {};
-      return Book.find(params).sort({ createdAt: -1 });
+      return User.find(params).sort({ createdAt: -1 });
     },
     books: async (parent, { _id }) => {
-      return Book.findOne({ _id });
+      return User.findOne({ _id });
     }
   },
 
