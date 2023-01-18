@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // set token secret and expiration date
 const secret = process.env.SECRET;
@@ -6,7 +7,7 @@ const expiration = '2h';
 
 module.exports = {
   // function for our authenticated routes
-  authMiddleware: function (req) {
+  authMiddleware: function (req, res, next) {
     // allows token to be sent via  req.query or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -16,7 +17,7 @@ module.exports = {
     }
 
     if (!token) {
-      return req;
+      return res.status(400).json({ message: 'You have no token!' });
     }
 
     // verify token and get user data out of it
@@ -29,7 +30,7 @@ module.exports = {
     }
 
     // send to next endpoint
-    return req;
+    next();
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
